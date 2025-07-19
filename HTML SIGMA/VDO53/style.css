@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@600&family=Poppins:wght@300;400;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family:'Poppins', sans-serif;
+
+}
+
+body{
+
+    background-color: black;
+}
+
+.main {
+    background-image: url(ASSETS/BG.JPG);
+    background-position: center center;
+    background-size: max(1200px, 100vw);
+    background-repeat: no-repeat;
+    height: 80vh;
+    position: relative;
+
+}
+
+.main .box {
+    height: 80vh;
+    width: 100%;
+    opacity: 0.69;
+    position: absolute;
+    top: 0;
+    background-color: black;
+
+    /* border: 2px solid white; */
+    /* clip-path: path("M1,0 H1269 V497 Q-217 252,0 886 "); */
+
+}
+
+nav {
+    max-width: 80vw;
+    justify-content: space-between;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    height: 83px;
+
+}
+
+nav img {
+
+    color: red;
+    width: 155px;
+    position: relative;
+    z-index: 10;
+
+}
+
+nav button {
+    position: relative;
+    z-index: 10;
+}
+
+.hero {
+    
+    font-family: 'Martel Sans', sans-serif;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    /* gap: 5px; */
+    padding: 0 30px;
+    /* font-weight: 900; */
+    /* background:transparent;
+    z-index: 10; */
+}
+
+.hero> :nth-child(1) {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    font-size: 56px;
+    text-align: center;
+    /* line-height: 70px; */
+}
+
+.hero> :nth-child(2) {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    font-size: 56px;
+    text-align: center;
+    /* line-height: 70px; */
+}
+
+.hero> :nth-child(3) {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    font-size: 56px;
+    text-align: center;
+    /* line-height: 70px; */
+}
+
+.hero> :nth-child(4) {
+    font-weight: 500;
+    font-size: 24px;
+    text-align: center;
+    line-height: 60px;
+}
+
+.hero> :nth-child(5) {
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    /* line-height: 60px; */
+}
+
