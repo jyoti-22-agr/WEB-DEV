@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎉 Birthday & Ganesh Chaturthi Surprise 🎉</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff3e6;
+      text-align: center;
+    }
+    section { display: none; padding: 30px; }
+    section.active { display: block; }
+
+    h1 { color: #d35400; }
+    .ganesh { width: 200px; margin: 20px auto; }
+
+    .box-grid {
+      display: flex; justify-content: center; gap: 20px; margin-top: 20px;
+    }
+    .box {
+      width: 100px; height: 100px; background: #ffeaa7;
+      border: 2px solid #d35400; border-radius: 12px;
+      display: flex; justify-content: center; align-items: center;
+      cursor: pointer; font-size: 18px;
+    }
+    .box.opened { background: #f1c40f; }
+
+    #envelope {
+      width: 120px; margin: 20px auto; cursor: pointer;
+      display: none;
+    }
+
+    #surpriseBtn {
+      display: none; padding: 12px 25px;
+      font-size: 18px; background: #e74c3c; color: white;
+      border: none; border-radius: 10px; cursor: pointer;
+    }
+
+    /* Gallery Animation */
+    .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+    .gallery img {
+      width: 150px; height: 200px; object-fit: cover;
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    .gallery img.show {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* Wishes */
+    .wishes { margin: 20px auto; max-width: 600px; font-size: 18px; line-height: 1.6; }
+
+    /* Collage video */
+    #collage { margin-top: 30px; display: none; }
+    #collage video {
+      width: 50%; border-radius: 20px; box-shadow: 0 0 20px #e67e22;
+    }
+
+    /* Celebration Balloons */
+    #balloons {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; overflow: hidden; z-index: 9999;
+    }
+    .balloon {
+      position: absolute; bottom: -150px;
+      width: 40px; height: 60px;
+      border-radius: 50%;
+      animation: rise 6s linear forwards;
+    }
+    @keyframes rise {
+      from { transform: translateY(0); opacity: 1; }
+      to   { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    /* Celebration Fireworks */
+    #celebration {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9998;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page 1: Ganesh Ji + Gift Game -->
+<section id="page1" class="active">
+  <h1>🙏 Happy Ganesh Chaturthi 🙏</h1>
+  <img src="images/lord ganesha.jpg" class="ganesh" alt="Ganesh Ji">
+  <p>Click on a gift box to see what’s inside 🎁</p>
+  <div class="box-grid">
+    <div class="box" data-idx="0"></div>
+    <div class="box" data-idx="1"></div>
+    <div class="box" data-idx="2"></div>
+  </div>
+  <img src="images/gift-box.png" id="envelope" alt="Envelope">
+</section>
+
+<!-- Page 2: Envelope -->
+<section id="page2">
+  <h1>🎉 You Found the Surprise! 🎉</h1>
+  <p>Click the envelope to open your surprise 🎁</p>
+  <img src="images/red-heart.png" id="envelopeOpen" alt="Envelope">
+  <br>
+  <button id="surpriseBtn">Open Surprise 🎁</button>
+</section>
+
+<!-- Page 3: Surprise -->
+<section id="page3">
+  <h1>🎂 Happy Birthday To Me 🎂</h1>
+  <div class="gallery" id="gallery">
+    <img src="images/1.jpg" alt="">
+    <img src="images/3.jpg" alt="">
+    <img src="images/4.jpg" alt="">
+    <img src="images/5.jpg" alt="">
+  </div>
+  <div class="wishes">
+    <p>Dear myself, wishing you endless happiness, love, and success in every step you take. 🌸</p>
+    <p>May your smile shine brighter than the stars and may this year bring you closer to your dreams. ✨</p>
+    <p>You are truly special, and today we celebrate YOU. ❤️</p>
+  </div>
+  <div id="collage">
+    <video src="images/Untitled design.mp4" controls muted></video>
+  </div>
+</section>
+
+<!-- Audio -->
+<audio id="birthdaySong" src="hbd.mp3"></audio>
+
+<!-- Celebration Layers -->
+<canvas id="celebration"></canvas>
+<div id="balloons"></div>
+
+<script>
+  // Gift Game
+  let winning = Math.floor(Math.random()*3);
+  const boxes = document.querySelectorAll(".box");
+  const envelope = document.getElementById("envelope");
+
+  boxes.forEach(box=>{
+    box.addEventListener("click", ()=>{
+      if(box.classList.contains("opened")) return;
+      box.classList.add("opened");
+
+      let idx = +box.dataset.idx;
+      if(idx === winning){
+        box.innerHTML = "🎉 Found!";
+        envelope.style.display = "block";
+      } else {
+        box.innerHTML = "😢 Empty";
+      }
+    });
+  });
+
+  // Move to Page 2
+  envelope.addEventListener("click", ()=>{
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+  });
+
+  // Envelope Open (start celebrations here 🎆🎈)
+  document.getElementById("envelopeOpen").addEventListener("click", ()=>{
+    document.getElementById("birthdaySong").play();
+    document.getElementById("surpriseBtn").style.display = "inline-block";
+
+    startFireworks();
+    launchBalloons();
+  });
+
+  // Move to Page 3
+  document.getElementById("surpriseBtn").addEventListener("click", ()=>{
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
+    revealGallery();
+  });
+
+  // Reveal images one by one
+  function revealGallery(){
+    const images = document.querySelectorAll("#gallery img");
+    images.forEach((img, i)=>{
+      setTimeout(()=>{ img.classList.add("show"); }, i*800);
+    });
+
+    // Show collage video at last
+    setTimeout(()=>{
+      document.getElementById("collage").style.display = "block";
+    }, images.length*900 + 1000);
+  }
+
+  // Fireworks Setup
+  const canvas = document.getElementById("celebration");
+  const ctx = canvas.getContext("2d");
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  let particles = [];
+
+  function firework(x, y) {
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x, y,
+        dx: (Math.random() - 0.5) * 6,
+        dy: (Math.random() - 0.5) * 6,
+        life: 100
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "hsl(" + Math.random() * 360 + ",100%,50%)";
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      p.life--;
+      if (p.life <= 0) particles.splice(i, 1);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  function startFireworks() {
+    let fireworkInterval = setInterval(() => {
+      firework(Math.random() * canvas.width, Math.random() * canvas.height / 2);
+    }, 600);
+
+    setTimeout(()=>clearInterval(fireworkInterval), 10000); // stop after 10s
+  }
+
+  // Balloons
+  function launchBalloons() {
+    const container = document.getElementById("balloons");
+    for (let i = 0; i < 20; i++) {
+      let b = document.createElement("div");
+      b.classList.add("balloon");
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.background = `hsl(${Math.random()*360},80%,60%)`;
+      container.appendChild(b);
+      setTimeout(()=>b.remove(), 6000);
+    }
+  }
+</script>
+</body>
+</html>
